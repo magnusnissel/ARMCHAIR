@@ -1,5 +1,5 @@
 # ARMCHAIR
-__A__utomated __R__SS __M__onitor __C__orpus __H__elper __A__nd __I__nformation __R__eporter 
+**A**utomated **R**SS **M**onitor **C**orpus **H**elper **A**nd **I**nformation **R**eporter 
 
 ## About ##
 
