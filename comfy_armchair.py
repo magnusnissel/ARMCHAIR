@@ -169,7 +169,7 @@ class ComfyArmchair(tk.Frame):
         self.stop_after = False
         self.pipe, worker_pipe = mp.Pipe()
         self.job = mp.Process(target=one_time_worker,
-                         args=(worker_pipe))
+                         args=(worker_pipe,))
         self.job.start()
         self.root.update_idletasks()
         self.root.after(500, self.check_job_status)
@@ -184,7 +184,7 @@ class ComfyArmchair(tk.Frame):
             self.stop_after = False
             self.pipe, worker_pipe = mp.Pipe()
             self.job = mp.Process(target=repeated_worker,
-                             args=(self.seconds, worker_pipe))  # can't pass self.armchair on Windows...
+                             args=(self.seconds, worker_pipe,))  # can't pass self.armchair on Windows...
             self.job.start()
             self.root.update_idletasks()
             self.root.after(500, self.check_job_status)

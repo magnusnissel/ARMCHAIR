@@ -1,4 +1,5 @@
 import os
+import sys
 import re
 import feedparser
 import requests
@@ -13,12 +14,20 @@ import lxml.etree as etree
 try:
     import justext
 except ImportError:
-    print("The justExt module needs to be installed for boilerplate removal and further data processing.")
+    print("The jusText module needs to be installed for boilerplate removal and further data processing.")
 
 
 class Armchair():
     def __init__(self):
-        self.base_dir = os.path.dirname(os.path.realpath(__file__))
+
+        # determine if script file or frozen exe
+        if getattr(sys, 'frozen', False):
+            self.base_dir = os.path.dirname(sys.executable)
+        elif __file__:
+            self.base_dir = os.path.dirname(os.path.realpath(__file__))
+
+        
+        self.stop_en_path = os.path.join(self.base_dir, "jusText_english_stoplist.txt") 
         self.feed_path = os.path.join(self.base_dir, "rss_feeds.csv")
         self.index_dir = os.path.join(self.base_dir, "indices")
         self.raw_dir = os.path.join(self.base_dir, "original_html")
@@ -227,13 +236,16 @@ class Armchair():
         try:
             import justext
         except ImportError:
-            print("The justExt module is required for further processing.")
+            print("The jusText module is required for further processing.")
             return 0
         else:
             self.load_indices()
             self.new_feed_items_df = pd.DataFrame()
+            # get stoplist for pyinstaller version (and future other uses)
+            with open(self.stop_en_path, "r", encoding="utf-8") as h:
+                stoplist = h.read().splitlines()
+            
             for index_file in self.index_files:
-                print(index_file)
                 df = pd.read_csv(index_file, index_col=0)
                 self.new_feed_items_df = self.new_feed_items_df.append(df, ignore_index=False)
 
@@ -243,14 +255,14 @@ class Armchair():
                 
             if len(process_df.index) > 0:
                 if use_justext:
-                    process_df.apply(self.apply_justext_boilerplate_stripper, axis=1)
+                    process_df.apply(lambda r: self.apply_justext_boilerplate_stripper(r, stoplist), axis=1)
                 for key, df in self.index_df.items():
                     index_path = os.path.join(self.index_dir, key)
                     df.to_csv(index_path, encoding="utf-8")
             return len(process_df.index)
 
 
-    def apply_justext_boilerplate_stripper(self, r):
+    def apply_justext_boilerplate_stripper(self, r, stoplist):
         index_key = "index_{}_{}_{}".format(r["country"], r["website"], r["feed_name"]) 
         index_key = "{}.csv".format(self.escape_filename(index_key))
         w = self.escape_filename(r["website"])
@@ -271,7 +283,10 @@ class Armchair():
             self.index_df[index_key].loc[r.name, "processed"] = False
             self.index_df[index_key].loc[r.name, "justext_comment"] = np.nan
         if text:
-            paragraphs = justext.justext(text, justext.get_stoplist("English"))
+            try:
+                paragraphs = justext.justext(text, justext.get_stoplist("English"))
+            except ValueError:  # e.g. if unable to get stoplist in pyinstaller compiled version
+                paragraphs = justext.justext(text, stoplist=stoplist)
             to_keep = []
             bp_count = 0
             for paragraph in paragraphs:
