@@ -46,3 +46,8 @@ For now, ARMCHAIR needs to be run using an installed version of Python. A Window
       * fake_useragent (optional)
 
 All modules except "justExt" and "fake_useragent" are included in the "Anaconda Python distribution". The justExt module will soon be optional, but is required if you desire automated boilerplate removal and XML conversion.
+
+## Citation ##
+If you end up using ARMCHAIR for published research, I would appreciate a reference along the lines of
+
+Nissel, Magnus. 2016. ARMCHAIR Automated Monitor Corpus Helper And Information Reporter. Software (GPL). https://github.com/magnusnissel/ARMCHAIR
