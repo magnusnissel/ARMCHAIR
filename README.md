@@ -22,9 +22,9 @@ Now you can proudly admit to being an ARMCHAIR linguist.
  * Convert the extracted "article text" to XML files with the metadata as attributes
  * Compile multiple articles into larger files. 
  * Gather and report information on the full monitor corpus (as well as the individual feed subcorpora), such as token lists and stylistic metrics
- * Add/Edit the RSS feeds from a GUI (Currently a .csv file needs to be edited in the spreadsheet software of your choice, e.g. Miscrosoft Excel or LibreOffice Calc)
+ * Add/Edit the RSS feeds from a GUI (durrently a .csv file needs to be edited in the spreadsheet software of your choice, e.g. Miscrosoft Excel or LibreOffice Calc)
 
- ## Files ##e
+ ## Files ##
  * rss_feeds.csv contains the RSS feeds from which to gather data.
  * armchair.py contains most of the actual code, but shouldn't normally be run directly.
  * comfy_armchair.py offers a to start the collection of texts manually (once or repeated runs). Eventually RSS settings should be editable from here as well.
