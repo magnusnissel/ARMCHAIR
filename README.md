@@ -9,11 +9,12 @@ software of your choice. Eventually, I hope to provide a GUI for this as well.
 Now you can proudly admit to being an ARMCHAIR linguist.
 
 
-## What can ARMCHAIR do? ##
+## What can ARMCHAIR do right now? ##
  * Check all feeds for new items
  * Keep an index and metadata of all collected items in CSV files (one per feed)
  * Create unique identifiers for each item (based on the publication date and the URL)
  * Download all new items (full html)
+ * Start the process either directly (using simple_armchair.py or endless_armchair.py) or via GUI (comfy_armchair.py)
 
 
 ## What will ARMCHAIR be able to do? ##
@@ -21,6 +22,7 @@ Now you can proudly admit to being an ARMCHAIR linguist.
  * Convert the extracted "article text" to XML files with the metadata as attributes
  * Compile multiple articles into larger files. 
  * Gather and report information on the full monitor corpus (as well as the individual feed subcorpora), such as token lists and stylistic metrics
+ * Add/Edit the RSS feeds from a GUI (Currently a .csv file needs to be edited in the spreadsheet software of your choice, e.g. Miscrosoft Excel or LibreOffice Calc)
 
  ## Files ##e
  * rss_feeds.csv contains the RSS feeds from which to gather data.
