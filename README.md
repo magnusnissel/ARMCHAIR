@@ -24,16 +24,16 @@ Now you can proudly admit to being an ARMCHAIR linguist.
  * Gather and report information on the full monitor corpus (as well as the individual feed subcorpora), such as token lists and stylistic metrics
  * Add/Edit the RSS feeds from a GUI (durrently a .csv file needs to be edited in the spreadsheet software of your choice, e.g. Miscrosoft Excel or LibreOffice Calc)
 
- # Files #
-  * rss_feeds.csv contains the RSS feeds from which to gather data.
-  * armchair.py contains most of the actual code, but shouldn't normally be run directly.
-  * comfy_armchair.py offers a to start the collection of texts manually (once or repeated runs). Eventually RSS settings should be editable from here as well.
-  * simple_armchair.py this script will gather data from all feeds once when it is run. This is useful if you have a way to automatically start it (multiple times) each day( e.g. with a cronjob).
-  * endless_armchair.py this script can can be left running and will automatically collect data every 2/4/6 etc. hours.
+## Files ##
+ * rss_feeds.csv contains the RSS feeds from which to gather data.
+ * armchair.py contains most of the actual code, but shouldn't normally be run directly.
+ * comfy_armchair.py offers a to start the collection of texts manually (once or repeated runs). Eventually RSS settings should be editable from here as well.
+ * simple_armchair.py this script will gather data from all feeds once when it is run. This is useful if you have a way to automatically start it (multiple times) each day( e.g. with a cronjob).
+ * endless_armchair.py this script can can be left running and will automatically collect data every hour.
 
- # Requirements #
- For now, ARMCHAIR needs to be run using a installed version of Python. A Windows EXE file will be available soon.
- To run the .py files you need:
+## Requirements ##
+For now, ARMCHAIR needs to be run using a installed version of Python. A Windows EXE file will be available soon.
+To run the .py files you need:
   * Python 3.x 
   * The following modules:
       * feedparser
@@ -42,4 +42,4 @@ Now you can proudly admit to being an ARMCHAIR linguist.
       * chardet
       * justext
       * fake_useragent (optional)
- Every required module except "justExt" and "fake_useragent" are included in the "Anaconda Python distribution". The justExt module will soon be optional, but is required if you desire automated boilerplate removal and XML conversion.
+Every required module except "justExt" and "fake_useragent" are included in the "Anaconda Python distribution". The justExt module will soon be optional, but is required if you desire automated boilerplate removal and XML conversion.
