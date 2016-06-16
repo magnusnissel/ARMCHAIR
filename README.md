@@ -1,6 +1,8 @@
 # ARMCHAIR
 **A**utomated **R**SS **M**onitor **C**orpus **H**elper **A**nd **I**nformation **R**eporter 
 
+![ARMCHAIR logo](/icons/armchair_logo_512x512.png)
+
 ## About ##
 
 ARMCHAIR can help you create large corpora based on web data that is accessible via RSS feeds (newspapers and magazines, but also many blogs and some social media sites).
