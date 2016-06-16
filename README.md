@@ -29,9 +29,9 @@ You can provide any number of RSS feeds alongside some metadata (website, feed n
 ## Files ##
  * rss_feeds.csv contains the RSS feeds from which to gather data.
  * armchair.py contains most of the actual code, but shouldn't normally be run directly.
- * comfy_armchair.py offers a to start the collection of texts manually (once or repeated runs). Eventually RSS settings should be editable from here as well.
- * simple_armchair.py this script will gather data from all feeds once when it is run. This is useful if you have a way to automatically start it (multiple times) each day( e.g. with a cronjob).
- * endless_armchair.py this script can can be left running and will automatically collect data every hour.
+ * comfy_armchair.py offers a user interface to start the collection of texts (once or repeated runs). Eventually the RSS settings will be editable from here as well.
+ * simple_armchair.py this script gathers data from all feeds once when it is run. This is useful if you have a way to start it automatically ( e.g. with a cronjob).
+ * endless_armchair.py this script can can be left running and will collect data every hour.
 
 ## Requirements ##
 For now, ARMCHAIR needs to be run using an installed version of Python. A Windows EXE file will be available soon. To run the .py files you need:
