@@ -6,12 +6,15 @@ import email.utils
 import hashlib
 import chardet
 import datetime
-import fake_useragent
-import sqlite3 as sql
 import pandas as pd
 import numpy as np
 import lxml.etree as etree
-import justext
+
+try:
+    import justext
+except ImportError:
+    print("The justExt module needs to be installed for boilerplate removal and further data processing.")
+
 
 class Armchair():
     def __init__(self):
@@ -22,8 +25,8 @@ class Armchair():
         self.proc_dir = os.path.join(self.base_dir, "processed_xml")
         self.monitor_dir = os.path.join(self.base_dir, "monitor_corpus")
         try: 
-            self.user_agent = None
-            #self.user_agent = fake_useragent.UserAgent()
+            import fake_useragent
+            self.user_agent = fake_useragent.UserAgent()
         except Exception:
             self.user_agent = None
         try:
@@ -221,24 +224,30 @@ class Armchair():
 
 
     def process_items(self, use_justext=True, only_unprocessed=True):
-        self.load_indices()
-        self.new_feed_items_df = pd.DataFrame()
-        for index_file in self.index_files:
-            print(index_file)
-            df = pd.read_csv(index_file, index_col=0)
-            self.new_feed_items_df = self.new_feed_items_df.append(df, ignore_index=False)
+        try:
+            import justext
+        except ImportError:
+            print("The justExt module is required for further processing.")
+            return 0
+        else:
+            self.load_indices()
+            self.new_feed_items_df = pd.DataFrame()
+            for index_file in self.index_files:
+                print(index_file)
+                df = pd.read_csv(index_file, index_col=0)
+                self.new_feed_items_df = self.new_feed_items_df.append(df, ignore_index=False)
 
-        process_df = self.new_feed_items_df[self.new_feed_items_df["downloaded"]==True]
-        if only_unprocessed:
-            process_df = process_df[process_df["processed"]==False] 
-            
-        if len(process_df.index) > 0:
-            if use_justext:
-                process_df.apply(self.apply_justext_boilerplate_stripper, axis=1)
-            for key, df in self.index_df.items():
-                index_path = os.path.join(self.index_dir, key)
-                df.to_csv(index_path)
-        return len(process_df.index)
+            process_df = self.new_feed_items_df[self.new_feed_items_df["downloaded"]==True]
+            if only_unprocessed:
+                process_df = process_df[process_df["processed"]==False] 
+                
+            if len(process_df.index) > 0:
+                if use_justext:
+                    process_df.apply(self.apply_justext_boilerplate_stripper, axis=1)
+                for key, df in self.index_df.items():
+                    index_path = os.path.join(self.index_dir, key)
+                    df.to_csv(index_path)
+            return len(process_df.index)
 
 
     def apply_justext_boilerplate_stripper(self, r):
