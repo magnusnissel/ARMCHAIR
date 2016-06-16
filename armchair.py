@@ -140,7 +140,9 @@ class Armchair():
                             df.to_csv(index_path)
                             self.new_feed_items_df = self.new_feed_items_df.append(new_df, ignore_index=False)
                         else:
+
                             print("No new items found for", r["feed_url"])
+        return len(self.new_feed_items_df.index)  # return number of new items
                     
 
     def load_indices(self, which=[]):
@@ -203,14 +205,19 @@ class Armchair():
         success = self.download_file(r["link"], file_path)
         self.index_df[index_key].loc[r.name, "original_html_file"] = filename
         self.index_df[index_key].loc[r.name, "downloaded"] = success
+        self.grabbed += int(success)  # 1 if True, 0 if False for dl count
 
     def grab_items(self): 
+        self.grabbed = 0
         if len(self.new_feed_items_df.index) > 0:
             self.load_indices()
             self.new_feed_items_df.apply(self.apply_item_grabber, axis=1)
             for key, df in self.index_df.items():
                 index_path = os.path.join(self.index_dir, key)
                 df.to_csv(index_path)
+
+        print("Downloaded {} items".format(self.grabbed))
+        return self.grabbed
 
 
     def process_items(self, use_justext=True, only_unprocessed=True):
@@ -231,6 +238,7 @@ class Armchair():
             for key, df in self.index_df.items():
                 index_path = os.path.join(self.index_dir, key)
                 df.to_csv(index_path)
+        return len(process_df.index)
 
 
     def apply_justext_boilerplate_stripper(self, r):
