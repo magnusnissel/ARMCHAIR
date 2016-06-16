@@ -6,9 +6,9 @@
 ## About ##
 
 ARMCHAIR can help you create large corpora based on web data that is accessible via RSS feeds (newspapers and magazines, but also many blogs and some social media sites).
-You can provide any number of RSS feeds alongside some metadata (website, feed name, category, country, language) by editing the "rss_feeds.csv" file in the spreadsheet 
-software of your choice. Eventually, I hope to provide a GUI for this as well.
-Now you can proudly admit to being an ARMCHAIR linguist.
+You can provide any number of RSS feeds alongside some metadata (website, feed name, category, country, language) by editing the "rss_feeds.csv" file. Use the "comfy_armchair.py" GUI to run or use one of the command line scripts.
+
+**Now you can proudly admit to being an ARMCHAIR linguist!**
 
 
 ## What can ARMCHAIR do right now? ##
