@@ -32,8 +32,8 @@ Now you can proudly admit to being an ARMCHAIR linguist.
  * endless_armchair.py this script can can be left running and will automatically collect data every hour.
 
 ## Requirements ##
-For now, ARMCHAIR needs to be run using a installed version of Python. A Windows EXE file will be available soon.
-To run the .py files you need:
+For now, ARMCHAIR needs to be run using an installed version of Python. A Windows EXE file will be available soon. To run the .py files you need:
+
   * Python 3.x 
   * The following modules:
       * feedparser
@@ -42,4 +42,5 @@ To run the .py files you need:
       * chardet
       * justext
       * fake_useragent (optional)
-Every required module except "justExt" and "fake_useragent" are included in the "Anaconda Python distribution". The justExt module will soon be optional, but is required if you desire automated boilerplate removal and XML conversion.
+
+All modules except "justExt" and "fake_useragent" are included in the "Anaconda Python distribution". The justExt module will soon be optional, but is required if you desire automated boilerplate removal and XML conversion.
