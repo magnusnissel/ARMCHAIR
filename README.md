@@ -24,7 +24,7 @@ You can provide any number of RSS feeds alongside some metadata (website, feed n
  * Convert the extracted "article text" to XML files with the metadata as attributes
  * Compile multiple articles into larger files. 
  * Gather and report information on the full monitor corpus (as well as the individual feed subcorpora), such as token lists and stylistic metrics
- * Add/Edit the RSS feeds from a GUI (durrently a .csv file needs to be edited in the spreadsheet software of your choice, e.g. Miscrosoft Excel or LibreOffice Calc)
+ * Add/Edit the RSS feeds from a GUI (currently a .csv file needs to be edited in the spreadsheet software of your choice, e.g. Miscrosoft Excel or LibreOffice Calc)
 
 ## Files ##
  * rss_feeds.csv contains the RSS feeds from which to gather data.
