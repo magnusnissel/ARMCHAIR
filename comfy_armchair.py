@@ -8,19 +8,20 @@ import os
 import sys
 
 
-def repeated_worker(armchair, seconds, pipe):
+def repeated_worker(seconds, pipe):
+    a = armchair.Armchair()
     while True:
         pipe.send("Looking for new items...")
-        num_new_items = armchair.index_items()
+        num_new_items = a.index_items()
         msg = "Found {} new items.".format(num_new_items)
         pipe.send(msg)
         if num_new_items > 0:
             pipe.send("Downloading new items...")
-            num_dl_items = armchair.grab_items()
+            num_dl_items = a.grab_items()
             msg = "Downloaded {} items.".format(num_dl_items)
             pipe.send(msg)
             pipe.send("Extracting new items with jusText...")
-            num_process_items = armchair.process_items()
+            num_process_items = a.process_items()
             msg = "Processed {} items.".format(num_dl_items)
             pipe.send(msg)
             
@@ -28,18 +29,19 @@ def repeated_worker(armchair, seconds, pipe):
         time.sleep(seconds)
 
 
-def one_time_worker(armchair, pipe):
-    pipe.send("Looking for new items...")
-    num_new_items = armchair.index_items()
+def one_time_worker(pipe):
+    a = armchair.Armchair()
+    pipeend("Looking for new items...")
+    num_new_items = a.index_items()
     msg = "Found {} new items.".format(num_new_items)
     pipe.send(msg)
     if num_new_items > 0:
         pipe.send("Downloading new items...")
-        num_dl_items = armchair.grab_items()
+        num_dl_items = a.grab_items()
         msg = "Downloaded {} items.".format(num_dl_items)
         pipe.send(msg)
         pipe.send("Extracting new items with jusText...")
-        num_process_items = armchair.process_items()
+        num_process_items = a.process_items()
         msg = "Processed {} items.".format(num_dl_items)
         pipe.send(msg)
     pipe.close()
@@ -51,7 +53,6 @@ class ComfyArmchair(tk.Frame):
         tk.Frame.__init__(self)
         self.root = root
         self.base_dir = os.path.dirname(os.path.realpath(__file__))
-        self.armchair = armchair.Armchair()
         self.draw_ui()
         self.root.mainloop()
 
@@ -168,7 +169,7 @@ class ComfyArmchair(tk.Frame):
         self.stop_after = False
         self.pipe, worker_pipe = mp.Pipe()
         self.job = mp.Process(target=one_time_worker,
-                         args=(self.armchair, worker_pipe))
+                         args=(worker_pipe))
         self.job.start()
         self.root.update_idletasks()
         self.root.after(500, self.check_job_status)
@@ -183,7 +184,7 @@ class ComfyArmchair(tk.Frame):
             self.stop_after = False
             self.pipe, worker_pipe = mp.Pipe()
             self.job = mp.Process(target=repeated_worker,
-                             args=(self.armchair, self.seconds, worker_pipe))
+                             args=(self.seconds, worker_pipe))  # can't pass self.armchair on Windows...
             self.job.start()
             self.root.update_idletasks()
             self.root.after(500, self.check_job_status)

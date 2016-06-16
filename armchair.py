@@ -48,7 +48,7 @@ class Armchair():
 
 
         try:
-            self.feed_list_df = pd.read_csv(self.feed_path)
+            self.feed_list_df = pd.read_csv(self.feed_path, encoding='utf-8')
         except IOError:
             self.feed_list_df = pd.DataFrame()
         """
@@ -132,7 +132,7 @@ class Armchair():
                     try:
                         df = pd.read_csv(index_path, index_col=0)
                     except OSError:  # e.g if not exist then save all
-                        new_df.to_csv(index_path)
+                        new_df.to_csv(index_path, encoding="utf-8")
                         self.new_feed_items_df = self.new_feed_items_df.append(new_df, ignore_index=False)
                     else:  # check which new
                         existing_identifiers = set(df.index)
@@ -140,7 +140,7 @@ class Armchair():
                         new_df = new_df[~new_df.index.isin(existing_identifiers)]  # only rows with new identifiers
                         if len(new_df.index)>0:
                             df = df.append(new_df, ignore_index=False)
-                            df.to_csv(index_path)
+                            df.to_csv(index_path, encoding="utf-8")
                             self.new_feed_items_df = self.new_feed_items_df.append(new_df, ignore_index=False)
                         else:
 
@@ -178,7 +178,7 @@ class Armchair():
                 detected = chardet.detect(content)
                 text = content.decode(detected["encoding"])
             if text:
-                with open(file_path, "w") as h:
+                with open(file_path, "w", encoding="utf-8") as h:
                     h.write(text)
                 print("Downloaded", url)
                 return True
@@ -217,7 +217,7 @@ class Armchair():
             self.new_feed_items_df.apply(self.apply_item_grabber, axis=1)
             for key, df in self.index_df.items():
                 index_path = os.path.join(self.index_dir, key)
-                df.to_csv(index_path)
+                df.to_csv(index_path, encoding="utf-8")
 
         print("Downloaded {} items".format(self.grabbed))
         return self.grabbed
@@ -246,7 +246,7 @@ class Armchair():
                     process_df.apply(self.apply_justext_boilerplate_stripper, axis=1)
                 for key, df in self.index_df.items():
                     index_path = os.path.join(self.index_dir, key)
-                    df.to_csv(index_path)
+                    df.to_csv(index_path, encoding="utf-8")
             return len(process_df.index)
 
 
@@ -263,7 +263,7 @@ class Armchair():
             pass
         processed_xml_path = os.path.join(xml_dir, r["original_html_file"].replace(".html", ".xml"))
         try:
-            with open(original_html_path, "r") as h:
+            with open(original_html_path, "r", encoding="utf-8") as h:
                 text = h.read()
         except FileNotFoundError:
             text = None
